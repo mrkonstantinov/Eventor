@@ -219,6 +219,20 @@ namespace IdentityServerHost.Quickstart.UI
                 Name = userModel.User.UserName,
                 Email = userModel.Email,
                 EmailConfirmed = false,
+
+                CardHolderName = "",
+                CardNumber = "",
+                CardType = 1,
+                City = "",
+                Country = "",
+                Expiration = "12/24",
+                LastName = "",
+                PhoneNumber = "1234567890",
+                ZipCode = "",
+                State = "",
+                Street = "",
+                SecurityNumber = "123"
+
             }, userModel.Password);
             try
             {
