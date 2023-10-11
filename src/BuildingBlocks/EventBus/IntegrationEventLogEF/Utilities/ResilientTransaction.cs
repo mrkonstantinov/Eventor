@@ -1,4 +1,4 @@
-﻿namespace Microsoft.eShopOnContainers.BuildingBlocks.IntegrationEventLogEF.Utilities;
+﻿namespace Eventor.BuildingBlocks.IntegrationEventLogEF.Utilities;
 
 public class ResilientTransaction
 {

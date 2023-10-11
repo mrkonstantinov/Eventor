@@ -1,4 +1,4 @@
-﻿using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Events;
+﻿using Eventor.BuildingBlocks.EventBus.Events;
 
 namespace EventBus.Tests
 {

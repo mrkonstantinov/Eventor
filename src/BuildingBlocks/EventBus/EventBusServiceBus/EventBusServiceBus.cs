@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.eShopOnContainers.BuildingBlocks.EventBusServiceBus;
+namespace Eventor.BuildingBlocks.EventBusServiceBus;
 
 public class EventBusServiceBus : IEventBus, IAsyncDisposable
 {

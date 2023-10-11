@@ -1,4 +1,4 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Identity.API.Configuration
+﻿namespace Eventor.Services.Identity.API.Configuration
 {
     public class Config
     {

@@ -7,7 +7,7 @@ WORKDIR /src
 
 # It's important to keep lines from here down to "COPY . ." identical in all Dockerfiles
 # to take advantage of Docker's build cache, to speed up local container builds
-COPY "eShopOnContainers-ServicesAndWebApps.sln" "eShopOnContainers-ServicesAndWebApps.sln"
+COPY "Eventor.sln" "Eventor.sln"
 
 COPY "BuildingBlocks/EventBus/EventBus/EventBus.csproj" "BuildingBlocks/EventBus/EventBus/EventBus.csproj"
 COPY "BuildingBlocks/EventBus/EventBus.Tests/EventBus.Tests.csproj" "BuildingBlocks/EventBus/EventBus.Tests/EventBus.Tests.csproj"
@@ -24,7 +24,7 @@ COPY "docker-compose.dcproj" "docker-compose.dcproj"
 COPY "Directory.Packages.props" "Directory.Packages.props"
 COPY "NuGet.config" "NuGet.config"
 
-RUN dotnet restore "eShopOnContainers-ServicesAndWebApps.sln"
+RUN dotnet restore "Eventor.sln"
 
 COPY . .
 WORKDIR /src/Services/Identity/Identity.API

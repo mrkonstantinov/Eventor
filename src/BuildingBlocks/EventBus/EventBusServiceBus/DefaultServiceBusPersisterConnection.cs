@@ -1,4 +1,4 @@
-﻿namespace Microsoft.eShopOnContainers.BuildingBlocks.EventBusServiceBus;
+﻿namespace Eventor.BuildingBlocks.EventBusServiceBus;
 
 public class DefaultServiceBusPersisterConnection : IServiceBusPersisterConnection
 {

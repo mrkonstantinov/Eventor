@@ -1,4 +1,4 @@
-﻿namespace Microsoft.eShopOnContainers.BuildingBlocks.EventBus;
+﻿namespace Eventor.BuildingBlocks.EventBus;
 
 public interface IEventBusSubscriptionsManager
 {

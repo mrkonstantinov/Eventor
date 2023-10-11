@@ -1,4 +1,4 @@
-﻿namespace Microsoft.eShopOnContainers.BuildingBlocks.IntegrationEventLogEF.Services;
+﻿namespace Eventor.BuildingBlocks.IntegrationEventLogEF.Services;
 
 public interface IIntegrationEventLogService
 {

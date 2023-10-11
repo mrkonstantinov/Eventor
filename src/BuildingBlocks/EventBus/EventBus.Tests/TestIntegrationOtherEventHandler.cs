@@ -1,4 +1,4 @@
-﻿using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
+﻿using Eventor.BuildingBlocks.EventBus.Abstractions;
 
 namespace EventBus.Tests
 {

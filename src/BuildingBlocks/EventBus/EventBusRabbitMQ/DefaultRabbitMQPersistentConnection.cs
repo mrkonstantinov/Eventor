@@ -1,4 +1,4 @@
-﻿namespace Microsoft.eShopOnContainers.BuildingBlocks.EventBusRabbitMQ;
+﻿namespace Eventor.BuildingBlocks.EventBusRabbitMQ;
 
 public class DefaultRabbitMQPersistentConnection
     : IRabbitMQPersistentConnection

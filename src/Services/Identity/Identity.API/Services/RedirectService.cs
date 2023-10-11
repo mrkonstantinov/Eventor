@@ -1,4 +1,4 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Identity.API.Services
+﻿namespace Eventor.Services.Identity.API.Services
 {
     public class RedirectService : IRedirectService
     {
