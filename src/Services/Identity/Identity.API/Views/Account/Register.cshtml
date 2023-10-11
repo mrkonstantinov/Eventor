@@ -1,0 +1,49 @@
+﻿@model Microsoft.eShopOnContainers.Services.Identity.API.Models.AccountViewModels.RegisterViewModel
+
+<div class="login-page">
+
+	<partial name="_ValidationSummary" />
+
+	<div class="container">
+		<div class="row top-buffer">
+
+			<div class="col"></div>
+			<div class="col-sm-6">
+				<div class="card">
+					<div class="card-header">
+						<h2>Register</h2>
+					</div>
+
+					<div class="card-body">
+						<form asp-route="Register">
+
+							<div class="form-group">
+								<label asp-for="User.UserName"></label>
+								<input class="form-control" placeholder="Username" asp-for="User.UserName" autofocus>
+							</div>
+
+							<div class="form-group">
+								<label asp-for="Email"></label>
+								<input class="form-control" placeholder="Email" asp-for="Email" autofocus>
+							</div>
+							<div class="form-group">
+								<label asp-for="Password"></label>
+								<input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
+							</div>
+
+							<div class="form-group">
+								<label asp-for="Password"></label>
+								<input type="password" class="form-control" placeholder="ConfirmPassword" asp-for="ConfirmPassword" autocomplete="off">
+							</div>
+
+							<button class="btn btn-primary" name="button" value="create">Create</button>
+							<button class="btn btn-secondary" name="button" value="cancel">Cancel</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="col"></div>
+
+		</div>
+	</div>
+</div>

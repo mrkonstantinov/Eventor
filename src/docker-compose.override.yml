@@ -1,0 +1,48 @@
+version: '3.4'
+
+# The default docker-compose.override file can use the "localhost" as the external name for testing web apps within the same dev machine.
+# The ESHOP_EXTERNAL_DNS_NAME_OR_IP environment variable is taken, by default, from the ".env" file defined like:
+#     ESHOP_EXTERNAL_DNS_NAME_OR_IP=localhost
+# but values present in the environment vars at runtime will always override those defined inside the .env file
+# An external IP or DNS name has to be used (instead localhost and the 10.0.75.1 IP) when testing the Web apps and the Xamarin apps from remote machines/devices using the same WiFi, for instance.
+
+services:
+  seq:
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "5340:80"
+
+  sqldata:
+    environment:
+      - SA_PASSWORD=Pass@word
+      - ACCEPT_EULA=Y
+    ports:
+      - "7433:1433"
+    volumes:
+      - eventor-sqldata:/var/opt/mssql
+
+  nosqldata:
+    ports:
+      - "27017:27017"
+    volumes:
+      - eventor-nosqldata:/data/db
+
+  identity-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - XamarinCallback=http://10.0.2.2:7105/xamarincallback
+      - ConnectionStrings__IdentityDb=${EVENTOR_AZURE_IDENTITY_DB:-Server=sqldata;Database=Eventor.Services.IdentityDb;User Id=sa;Password=Pass@word;Encrypt=False;TrustServerCertificate=true}
+      - UseCustomizationData=True
+      - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
+      - OrchestratorType=${ORCHESTRATOR_TYPE}
+    ports:
+      - "7105:80"
+
+volumes:
+  eventor-sqldata:
+    external: false
+  eventor-nosqldata:
+    external: false
+
