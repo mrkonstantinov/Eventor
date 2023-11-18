@@ -10,7 +10,7 @@
         "identity-api": "StartDebugging",
         "mobileshoppingagg": "StartDebugging",
         "nosqldata": "StartWithoutDebugging",
-        "ordering-api": "StartDebugging",
+        "meetuping-api": "StartDebugging",
         "ordering-backgroundtasks": "StartDebugging",
         "ordering-signalrhub": "StartDebugging",
         "payment-api": "StartDebugging",

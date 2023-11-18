@@ -21,20 +21,12 @@ public class SeedData
                     UserName = "alice",
                     Email = "AliceSmith@email.com",
                     EmailConfirmed = true,
-                    CardHolderName = "Alice Smith",
-                    CardNumber = "4012888888881881",
-                    CardType = 1,
                     City = "Redmond",
-                    Country = "U.S.",
-                    Expiration = "12/24",
+                    Birthdate = new DateTime(2001, 1, 1),
+                    Gender =2,
                     Id = Guid.NewGuid().ToString(),
-                    LastName = "Smith",
                     Name = "Alice",
-                    PhoneNumber = "1234567890",
-                    ZipCode = "98052",
-                    State = "WA",
-                    Street = "15703 NE 61st Ct",
-                    SecurityNumber = "123"
+                    PhoneNumber = "1234567890"                    
                 };
 
                 var result = userMgr.CreateAsync(alice, "Pass123$").Result;
@@ -60,20 +52,12 @@ public class SeedData
                     UserName = "bob",
                     Email = "BobSmith@email.com",
                     EmailConfirmed = true,
-                    CardHolderName = "Bob Smith",
-                    CardNumber = "4012888888881881",
-                    CardType = 1,
                     City = "Redmond",
-                    Country = "U.S.",
-                    Expiration = "12/24",
+                    Birthdate = new DateTime(2002, 2, 2),
+                    Gender = 1,
                     Id = Guid.NewGuid().ToString(),
-                    LastName = "Smith",
                     Name = "Bob",
-                    PhoneNumber = "1234567890",
-                    ZipCode = "98052",
-                    State = "WA",
-                    Street = "15703 NE 61st Ct",
-                    SecurityNumber = "456"
+                    PhoneNumber = "1234567890"                    
                 };
 
                 var result = await userMgr.CreateAsync(bob, "Pass123$");

@@ -7,7 +7,7 @@
         {
             return new List<ApiResource>
             {
-                new ApiResource("orders", "Orders Service"),
+                new ApiResource("meetups", "Meetups Service"),
                 new ApiResource("basket", "Basket Service"),
                 new ApiResource("mobileshoppingagg", "Mobile Shopping Aggregator"),
                 new ApiResource("webshoppingagg", "Web Shopping Aggregator"),
@@ -22,7 +22,7 @@
         {
             return new List<ApiScope>
             {
-                new ApiScope("orders", "Orders Service"),
+                new ApiScope("meetups", "Meetups Service"),
                 new ApiScope("basket", "Basket Service"),
                 new ApiScope("mobileshoppingagg", "Mobile Shopping Aggregator"),
                 new ApiScope("webshoppingagg", "Web Shopping Aggregator"),
@@ -62,7 +62,7 @@
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "orders",
+                        "meetups",
                         "basket",
                         "webshoppingagg",
                         "orders.signalrhub",
@@ -89,7 +89,7 @@
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.OfflineAccess,
-                        "orders",
+                        "meetups",
                         "basket",
                         "mobileshoppingagg",
                         "webhooks"
@@ -127,7 +127,7 @@
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.OfflineAccess,
-                        "orders",
+                        "meetups",
                         "basket",
                         "webshoppingagg",
                         "orders.signalrhub",
@@ -194,7 +194,7 @@
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.OfflineAccess,
-                        "orders",
+                        "meetups",
                         "basket",
                         "webshoppingagg",
                         "webhooks"
@@ -217,17 +217,17 @@
                 },
                 new Client
                 {
-                    ClientId = "orderingswaggerui",
-                    ClientName = "Ordering Swagger UI",
+                    ClientId = "meetupingswaggerui",
+                    ClientName = "Meetuping Swagger UI",
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
 
-                    RedirectUris = { $"{configuration["OrderingApiClient"]}/swagger/oauth2-redirect.html" },
-                    PostLogoutRedirectUris = { $"{configuration["OrderingApiClient"]}/swagger/" },
+                    RedirectUris = { $"{configuration["MeetupingApiClient"]}/swagger/oauth2-redirect.html" },
+                    PostLogoutRedirectUris = { $"{configuration["MeetupingApiClient"]}/swagger/" },
 
                     AllowedScopes =
                     {
-                        "orders"
+                        "meetups"
                     }
                 },
                 new Client

@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 using Eventor.Services.Identity.API.Models.AccountViewModels;
+using Microsoft.Azure.Amqp.Framing;
 
 namespace IdentityServerHost.Quickstart.UI
 {
@@ -220,19 +221,10 @@ namespace IdentityServerHost.Quickstart.UI
                 Email = userModel.Email,
                 EmailConfirmed = false,
 
-                CardHolderName = "",
-                CardNumber = "",
-                CardType = 1,
-                City = "",
-                Country = "",
-                Expiration = "12/24",
-                LastName = "",
-                PhoneNumber = "1234567890",
-                ZipCode = "",
-                State = "",
-                Street = "",
-                SecurityNumber = "123"
-
+                City = userModel.User.City,
+                Region = userModel.User.Region,
+                Birthdate = userModel.User.Birthdate,
+                Gender = userModel.User.Gender
             }, userModel.Password);
             try
             {

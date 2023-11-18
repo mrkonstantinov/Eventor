@@ -24,3 +24,12 @@ services:
       dockerfile: Services/Identity/Identity.API/Dockerfile
     depends_on:
       - sqldata
+ 
+  meetuping-api:
+    image: ${REGISTRY:-eventor}/meetuping.api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: Services/Meetuping/Meetuping.API/Dockerfile
+    depends_on:
+      - sqldata
+      - rabbitmq

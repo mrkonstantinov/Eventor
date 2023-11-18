@@ -1,18 +1,26 @@
-﻿namespace Eventor.Services.Meetuping.Domain.AggregatesModel.MeetupAggregate;
+﻿using Meetuping.Domain.AggregatesModel.MeetupAggregate;
+using System.Net;
+
+namespace Eventor.Services.Meetuping.Domain.AggregatesModel.MeetupAggregate;
 
 public class Meetup
     : Entity, IAggregateRoot
-{
+{    
+    //public List<Tag> Tags { get; set; } = new();
     // DDD Patterns comment
     // Using private fields, allowed since EF Core 1.1, is a much better encapsulation
     // aligned with DDD Aggregates and Domain Entities (Instead of properties and property collections)
     private DateTime _meetupDate;
+    private string _ownerName;
+    private int? _age;
+    private int? _gender;
+    private string _ownerPhotoUrl;
 
     // Address is a Value Object pattern example persisted as EF Core 2.0 owned entity
     public Address Address { get; private set; }
 
-    public int? GetBuyerId => _buyerId;
-    private int? _buyerId;
+    public Guid GetOwnerId => _ownerId;
+    private Guid _ownerId;
 
     public MeetupStatus MeetupStatus { get; private set; }
     private int _meetupStatusId;
@@ -28,8 +36,10 @@ public class Meetup
     // Using a private collection field, better for DDD Aggregate's encapsulation
     // so OrderItems cannot be added from "outside the AggregateRoot" directly to the collection,
     // but only through the method OrderAggregateRoot.AddOrderItem() which includes behavior.
-    private readonly List<MeetupItem> _meetupItems;
-    public IReadOnlyCollection<MeetupItem> MeetupItems => _meetupItems;
+    private readonly List<Mate> _mates;
+    public IReadOnlyCollection<Mate> Mates => _mates;
+
+    //public List<Tag> Tags { get; } = new();
 
     public static Meetup NewDraft()
     {
@@ -42,63 +52,77 @@ public class Meetup
 
     protected Meetup()
     {
-        _meetupItems = new List<MeetupItem>();
+        _mates = new List<Mate>();
         _isDraft = false;
     }
 
-    public Meetup(string userId, string userName, Address address, int cardTypeId, string cardNumber, string cardSecurityNumber,
-            string cardHolderName, DateTime cardExpiration, int? buyerId = null) : this()
+    public Meetup(Guid userId, string ownerName, int? age, int? gender, string ownerPhotoUrl, DateTime meetupDate, Address address, IEnumerable<string> tags) : this()
     {
-        _buyerId = buyerId;
-        _meetupStatusId = MeetupStatus.Submitted.Id;
-        _meetupDate = DateTime.UtcNow;
+        ValidateTags(tags);
+        _ownerId = userId;
+        _ownerName = ownerName;
+        _age = age;
+        _gender = gender;
+        _ownerPhotoUrl = ownerPhotoUrl;
+        _meetupDate = meetupDate;
+
+        _meetupStatusId = MeetupStatus.Submitted.Id;        
         Address = address;
 
-        // Add the OrderStarterDomainEvent to the domain events collection 
+        foreach (var tag in tags)
+        {
+            AddTag(new Tag() { Value = tag});
+        }
+
+        // Add the MeetupCreatedDomainEvent to the domain events collection 
         // to be raised/dispatched when committing changes into the Database [ After DbContext.SaveChanges() ]
-        AddMeetupStartedDomainEvent(userId, userName, cardTypeId, cardNumber,
-                                    cardSecurityNumber, cardHolderName, cardExpiration);
+        AddMeetupCreatedDomainEvent(userId, ownerName, age, gender);
     }
 
     // DDD Patterns comment
     // This Order AggregateRoot's method "AddOrderItem()" should be the only way to add Items to the Order,
     // so any behavior (discounts, etc.) and validations are controlled by the AggregateRoot 
     // in order to maintain consistency between the whole Aggregate. 
-    public void AddOrderItem(int productId, string productName, decimal unitPrice, decimal discount, string pictureUrl, int units = 1)
+    public void AddMate(Guid userId, string name, int age, int gender, string pictureUrl)
     {
-        var existingOrderForProduct = _meetupItems.Where(o => o.ProductId == productId)
+        var existingMate = _mates.Where(o => o.UserId == userId)
             .SingleOrDefault();
 
-        if (existingOrderForProduct != null)
+        if (existingMate != null)
         {
-            //if previous line exist modify it with higher discount  and units..
-
-            if (discount > existingOrderForProduct.GetCurrentDiscount())
-            {
-                existingOrderForProduct.SetNewDiscount(discount);
-            }
-
-            existingOrderForProduct.AddUnits(units);
+            
         }
         else
         {
             //add validated new order item
 
-            var orderItem = new MeetupItem(productId, productName, unitPrice, discount, pictureUrl, units);
-            _meetupItems.Add(orderItem);
+            var mate = new Mate(userId, name, age, gender, pictureUrl);
+            _mates.Add(mate);
         }
     }
 
-    public void SetBuyerId(int id)
+    public void SetOwnerId(Guid id)
     {
-        _buyerId = id;
+        _ownerId = id;
+    }
+
+    public void AddTag(Tag tag)
+    {
+        if (tag != null)
+        {
+            Metadata.Tags.Add(tag);
+        }
+        else
+        {
+
+        }
     }
 
     public void SetAwaitingValidationStatus()
     {
         if (_meetupStatusId == MeetupStatus.Submitted.Id)
         {
-            AddDomainEvent(new MeetupStatusChangedToAwaitingValidationDomainEvent(Id, _meetupItems));
+            AddDomainEvent(new MeetupStatusChangedToAwaitingValidationDomainEvent(Id, _mates));
             _meetupStatusId = MeetupStatus.AwaitingValidation.Id;
         }
     }
@@ -118,7 +142,7 @@ public class Meetup
     {
         if (_meetupStatusId == MeetupStatus.StockConfirmed.Id)
         {
-            AddDomainEvent(new MeetuStatusChangedToPaidDomainEvent(Id, MeetupItems));
+            AddDomainEvent(new MeetuStatusChangedToPaidDomainEvent(Id, Mates));
 
             _meetupStatusId = MeetupStatus.Paid.Id;
             _description = "The payment was performed at a simulated \"American Bank checking bank account ending on XX35071\"";
@@ -150,38 +174,66 @@ public class Meetup
         AddDomainEvent(new MeetupCancelledDomainEvent(this));
     }
 
-    public void SetCancelledStatusWhenStockIsRejected(IEnumerable<int> orderStockRejectedItems)
+    //public void SetCancelledStatusWhenStockIsRejected(IEnumerable<int> orderStockRejectedItems)
+    //{
+    //    if (_meetupStatusId == MeetupStatus.AwaitingValidation.Id)
+    //    {
+    //        _meetupStatusId = MeetupStatus.Cancelled.Id;
+
+    //        var itemsStockRejectedProductNames = Participants
+    //            .Where(c => orderStockRejectedItems.Contains(c.ProductId))
+    //            .Select(c => c.GetOrderItemProductName());
+
+    //        var itemsStockRejectedDescription = string.Join(", ", itemsStockRejectedProductNames);
+    //        _description = $"The product items don't have stock: ({itemsStockRejectedDescription}).";
+    //    }
+    //}
+
+    private void AddMeetupCreatedDomainEvent(Guid ownerId, string ownerName, int? age, int? gender)
     {
-        if (_meetupStatusId == MeetupStatus.AwaitingValidation.Id)
+        var meetupCreatedDomainEvent = new MeetupCreatedDomainEvent(this, ownerId, ownerName, age, gender);
+
+        this.AddDomainEvent(meetupCreatedDomainEvent);
+    }
+
+    private void StatusChangeException(MeetupStatus meetupStatusToChange)
+    {
+        throw new MeetupingDomainException($"Is not possible to change the order status from {MeetupStatus.Name} to {meetupStatusToChange.Name}.");
+    }
+
+    //public decimal GetTotal()
+    //{
+    //    return _participants.Sum(o => o.GetUnits() * o.GetUnitPrice());
+    //}
+
+    private static void ValidateTags(IEnumerable<string> tags)
+    {
+        if (tags is null || !tags.Any())
         {
-            _meetupStatusId = MeetupStatus.Cancelled.Id;
+            throw new MissingResourceTagsException();
+        }
 
-            var itemsStockRejectedProductNames = MeetupItems
-                .Where(c => orderStockRejectedItems.Contains(c.ProductId))
-                .Select(c => c.GetOrderItemProductName());
-
-            var itemsStockRejectedDescription = string.Join(", ", itemsStockRejectedProductNames);
-            _description = $"The product items don't have stock: ({itemsStockRejectedDescription}).";
+        if (tags.Any(string.IsNullOrWhiteSpace))
+        {
+            throw new InvalidResourceTagsException();
         }
     }
 
-    private void AddMeetupStartedDomainEvent(string userId, string userName, int cardTypeId, string cardNumber,
-            string cardSecurityNumber, string cardHolderName, DateTime cardExpiration)
-    {
-        var meetupStartedDomainEvent = new MeetupStartedDomainEvent(this, userId, userName, cardTypeId,
-                                                                    cardNumber, cardSecurityNumber,
-                                                                    cardHolderName, cardExpiration);
-
-        this.AddDomainEvent(meetupStartedDomainEvent);
-    }
-
-    private void StatusChangeException(MeetupStatus orderStatusToChange)
-    {
-        throw new MeetupDomainException($"Is not possible to change the order status from {MeetupStatus.Name} to {orderStatusToChange.Name}.");
-    }
-
-    public decimal GetTotal()
-    {
-        return _meetupItems.Sum(o => o.GetUnits() * o.GetUnitPrice());
-    }
+    public PostMetadata? Metadata { get; } = new();
 }
+
+
+#region PostMetadataAggregate
+public class PostMetadata
+{
+    public List<Tag> Tags { get; } = new();
+}
+
+public class Tag
+{
+    public string Value { get; set; }
+    public static implicit operator string(Tag tag) => tag.Value;
+    public static implicit operator Tag(string tag) => new() { Value = tag };
+}
+
+#endregion

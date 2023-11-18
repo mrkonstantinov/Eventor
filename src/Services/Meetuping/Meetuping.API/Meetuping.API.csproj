@@ -1,0 +1,117 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <UserSecretsId>aspnet-Meetuping.API-20161122013547</UserSecretsId>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <DockerComposeProjectPath>..\..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
+    <RootNamespace>Eventor.Services.Meetuping.API</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Setup\**\*;">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Application\Commands\CancelOrderCommand.cs" />
+    <Compile Remove="Application\Commands\CancelOrderCommandHandler.cs" />
+    <Compile Remove="Application\Commands\CreateOrderDraftCommand.cs" />
+    <Compile Remove="Application\Commands\CreateOrderDraftCommandHandler.cs" />
+    <Compile Remove="Application\Commands\SetAwaitingValidationOrderStatusCommand.cs" />
+    <Compile Remove="Application\Commands\SetAwaitingValidationOrderStatusCommandHandler.cs" />
+    <Compile Remove="Application\Commands\SetPaidOrderStatusCommand.cs" />
+    <Compile Remove="Application\Commands\SetPaidOrderStatusCommandHandler.cs" />
+    <Compile Remove="Application\Commands\SetStockConfirmedOrderStatusCommand.cs" />
+    <Compile Remove="Application\Commands\SetStockConfirmedOrderStatusCommandHandler.cs" />
+    <Compile Remove="Application\Commands\SetStockRejectedOrderStatusCommand.cs" />
+    <Compile Remove="Application\Commands\SetStockRejectedOrderStatusCommandHandler.cs" />
+    <Compile Remove="Application\Commands\ShipOrderCommand.cs" />
+    <Compile Remove="Application\Commands\ShipOrderCommandHandler.cs" />
+    <Compile Remove="Application\DomainEventHandlers\OrderCancelledDomainEventHandler.cs" />
+    <Compile Remove="Application\DomainEventHandlers\OrderShippedDomainEventHandler.cs" />
+    <Compile Remove="Application\DomainEventHandlers\OrderStatusChangedToAwaitingValidationDomainEventHandler.cs" />
+    <Compile Remove="Application\DomainEventHandlers\OrderStatusChangedToPaidDomainEventHandler.cs" />
+    <Compile Remove="Application\DomainEventHandlers\OrderStatusChangedToStockConfirmedDomainEventHandler.cs" />
+    <Compile Remove="Application\DomainEventHandlers\UpdateOrderWhenBuyerAndPaymentMethodVerifiedDomainEventHandler.cs" />
+    <Compile Remove="Application\DomainEventHandlers\ValidateOrAddBuyerAggregateWhenOrderStartedDomainEventHandler.cs" />
+    <Compile Remove="Application\IntegrationEvents\EventHandling\GracePeriodConfirmedIntegrationEventHandler.cs" />
+    <Compile Remove="Application\IntegrationEvents\EventHandling\OrderPaymentFailedIntegrationEventHandler.cs" />
+    <Compile Remove="Application\IntegrationEvents\EventHandling\OrderPaymentSucceededIntegrationEventHandler.cs" />
+    <Compile Remove="Application\IntegrationEvents\EventHandling\OrderStockConfirmedIntegrationEventHandler.cs" />
+    <Compile Remove="Application\IntegrationEvents\EventHandling\OrderStockRejectedIntegrationEventHandler.cs" />
+    <Compile Remove="Application\IntegrationEvents\EventHandling\UserCheckoutAcceptedIntegrationEventHandler.cs" />
+    <Compile Remove="Application\IntegrationEvents\Events\GracePeriodConfirmedIntegrationEvent.cs" />
+    <Compile Remove="Application\IntegrationEvents\Events\OrderPaymentFailedIntegrationEvent .cs" />
+    <Compile Remove="Application\IntegrationEvents\Events\OrderPaymentSucceededIntegrationEvent.cs" />
+    <Compile Remove="Application\IntegrationEvents\Events\OrderStatusChangedToAwaitingValidationIntegrationEvent.cs" />
+    <Compile Remove="Application\IntegrationEvents\Events\OrderStatusChangedToCancelledIntegrationEvent.cs" />
+    <Compile Remove="Application\IntegrationEvents\Events\OrderStatusChangedToPaidIntegrationEvent.cs" />
+    <Compile Remove="Application\IntegrationEvents\Events\OrderStatusChangedToShippedIntegrationEvent.cs" />
+    <Compile Remove="Application\IntegrationEvents\Events\OrderStatusChangedToStockConfirmedIntegrationEvent.cs" />
+    <Compile Remove="Application\IntegrationEvents\Events\OrderStatusChangedTosubmittedIntegrationEvent.cs" />
+    <Compile Remove="Application\IntegrationEvents\Events\OrderStockConfirmedIntegrationEvent.cs" />
+    <Compile Remove="Application\IntegrationEvents\Events\OrderStockRejectedIntegrationEvent.cs" />
+    <Compile Remove="Application\IntegrationEvents\Events\UserCheckoutAcceptedIntegrationEvent.cs" />
+    <Compile Remove="Application\Models\BasketItem.cs" />
+    <Compile Remove="Application\Models\CustomerBasket.cs" />
+    <Compile Remove="Application\Validations\CancelOrderCommandValidator.cs" />
+    <Compile Remove="Application\Validations\ShipOrderCommandValidator.cs" />
+    <Compile Remove="Grpc\MeetupingService.cs" />
+    <Compile Remove="Grpc\OrderingService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Meetuping.FunctionalTests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Proto\meetuping.proto" GrpcServices="Server" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\IntegrationEventLogEF\IntegrationEventLogEF.csproj" />   
+    <ProjectReference Include="..\..\Services.Common\Services.Common.csproj" />   
+    <ProjectReference Include="..\Meetuping.Domain\Meetuping.Domain.csproj" />   
+    <ProjectReference Include="..\Meetuping.Infrastructure\Meetuping.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.SqlServer" />
+    <PackageReference Include="Dapper" />
+    <PackageReference Include="FluentValidation.AspNetCore" />
+    <PackageReference Include="Grpc.AspNetCore" />
+    <PackageReference Include="MediatR" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Polly" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Update="Setup\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Content Update="appsettings.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Application\DomainEventHandlers\" />
+    <Folder Include="Application\IntegrationEvents\EventHandling\" />
+    <Folder Include="Grpc\" />
+    <Folder Include="Infrastructure\Migrations\" />
+  </ItemGroup>
+
+</Project>

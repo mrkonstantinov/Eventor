@@ -27,7 +27,7 @@ public class MeetupStatus
 
         if (state == null)
         {
-            throw new MeetupDomainException($"Possible values for OrderStatus: {string.Join(",", List().Select(s => s.Name))}");
+            throw new MeetupingDomainException($"Possible values for MeetupStatus: {string.Join(",", List().Select(s => s.Name))}");
         }
 
         return state;
@@ -39,7 +39,7 @@ public class MeetupStatus
 
         if (state == null)
         {
-            throw new MeetupDomainException($"Possible values for OrderStatus: {string.Join(",", List().Select(s => s.Name))}");
+            throw new MeetupingDomainException($"Possible values for MeetupStatus: {string.Join(",", List().Select(s => s.Name))}");
         }
 
         return state;

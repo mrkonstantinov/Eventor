@@ -16,6 +16,9 @@ COPY "BuildingBlocks/EventBus/EventBusServiceBus/EventBusServiceBus.csproj" "Bui
 COPY "BuildingBlocks/EventBus/IntegrationEventLogEF/IntegrationEventLogEF.csproj" "BuildingBlocks/EventBus/IntegrationEventLogEF/IntegrationEventLogEF.csproj"
 COPY "BuildingBlocks/WebHostCustomization/WebHost.Customization/WebHost.Customization.csproj" "BuildingBlocks/WebHostCustomization/WebHost.Customization/WebHost.Customization.csproj"
 COPY "Services/Identity/Identity.API/Identity.API.csproj" "Services/Identity/Identity.API/Identity.API.csproj"
+COPY "Services/Meetuping/Meetuping.API/Meetuping.API.csproj" "Services/Meetuping/Meetuping.API/Meetuping.API.csproj"
+COPY "Services/Meetuping/Meetuping.Domain/Meetuping.Domain.csproj" "Services/Meetuping/Meetuping.Domain/Meetuping.Domain.csproj"
+COPY "Services/Meetuping/Meetuping.Infrastructure/Meetuping.Infrastructure.csproj" "Services/Meetuping/Meetuping.Infrastructure/Meetuping.Infrastructure.csproj"
 COPY "Services/Services.Common/Services.Common.csproj" "Services/Services.Common/Services.Common.csproj"
 COPY "Tests/Services/Application.FunctionalTests/Application.FunctionalTests.csproj" "Tests/Services/Application.FunctionalTests/Application.FunctionalTests.csproj"
 

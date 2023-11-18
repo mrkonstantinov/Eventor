@@ -1,4 +1,6 @@
-﻿namespace Eventor.Services.Meetuping.Domain.Events;
+﻿using Meetuping.Domain.AggregatesModel.MeetupAggregate;
+
+namespace Eventor.Services.Meetuping.Domain.Events;
 
 /// <summary>
 /// Event used when the grace period order is confirmed
@@ -7,12 +9,12 @@ public class MeetupStatusChangedToAwaitingValidationDomainEvent
         : INotification
 {
     public int MeetupId { get; }
-    public IEnumerable<MeetupItem> MeetupItems { get; }
+    public IEnumerable<Mate> Mates { get; }
 
     public MeetupStatusChangedToAwaitingValidationDomainEvent(int meetupId,
-        IEnumerable<MeetupItem> meetupItems)
+        IEnumerable<Mate> mates)
     {
         MeetupId = meetupId;
-        MeetupItems = meetupItems;
+        Mates = mates;
     }
 }

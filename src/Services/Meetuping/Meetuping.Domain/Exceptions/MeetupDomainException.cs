@@ -3,16 +3,16 @@
 /// <summary>
 /// Exception type for domain exceptions
 /// </summary>
-public class MeetupDomainException : Exception
+public class MeetupingDomainException : Exception
 {
-    public MeetupDomainException()
+    public MeetupingDomainException()
     { }
 
-    public MeetupDomainException(string message)
+    public MeetupingDomainException(string message)
         : base(message)
     { }
 
-    public MeetupDomainException(string message, Exception innerException)
+    public MeetupingDomainException(string message, Exception innerException)
         : base(message, innerException)
     { }
 }

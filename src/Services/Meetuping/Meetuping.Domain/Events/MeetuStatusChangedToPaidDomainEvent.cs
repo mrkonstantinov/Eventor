@@ -1,4 +1,5 @@
 using Eventor.Services.Meetuping.Domain.AggregatesModel.MeetupAggregate;
+using Meetuping.Domain.AggregatesModel.MeetupAggregate;
 
 namespace Eventor.Services.Meetuping.Domain.Events;
 
@@ -9,12 +10,12 @@ public class MeetuStatusChangedToPaidDomainEvent
     : INotification
 {
     public int MeetupId { get; }
-    public IEnumerable<MeetupItem> MeetupItems { get; }
+    public IEnumerable<Mate> Mates { get; }
 
     public MeetuStatusChangedToPaidDomainEvent(int meetupId,
-        IEnumerable<MeetupItem> meetupItems)
+        IEnumerable<Mate> mates)
     {
         MeetupId = meetupId;
-        MeetupItems = meetupItems;
+        Mates = mates;
     }
 }

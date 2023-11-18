@@ -1,0 +1,14 @@
+﻿global using MediatR;
+global using Microsoft.AspNetCore.Mvc;
+global using Eventor.Services.Meetuping.API.Application.Commands;
+global using Eventor.Services.Meetuping.API.Application.Models;
+global using Eventor.Services.Meetuping.API.Controllers;
+global using Eventor.Services.Meetuping.API.Infrastructure.Services;
+global using Eventor.Services.Meetuping.Domain.Events;
+global using Eventor.Services.Meetuping.Domain.Exceptions;
+global using Eventor.Services.Meetuping.Domain.SeedWork;
+global using Eventor.Services.Meetuping.Infrastructure.Idempotency;
+global using Microsoft.Extensions.Logging;
+global using Moq;
+//global using UnitTest.Meetuping;
+global using Xunit;
